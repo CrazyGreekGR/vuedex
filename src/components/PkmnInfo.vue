@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watchEffect } from 'vue'
 import { trimSprite } from '@/utils/trimSprite'
-import Missing from '@/assets/pokemonmissing.svg'
+import Missing from '@/assets/pokemonmissing.svg?url'
 
 const props = defineProps({
   spriteUrl: {
