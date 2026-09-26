@@ -1,11 +1,12 @@
 <script setup>
 import { ref, watchEffect } from 'vue'
 import { trimSprite } from '@/utils/trimSprite'
+import Missing from '@/assets/pokemonmissing.svg'
 
 const props = defineProps({
   spriteUrl: {
     type: String,
-    default: '/src/assets/pokemonmissing.svg?url',
+    default: Missing,
   },
   pkmnName: {
     type: String,
@@ -16,7 +17,7 @@ const props = defineProps({
 const displaySrc = ref(props.spriteUrl)
 
 watchEffect(async () => {
-  const src = props.spriteUrl || '/src/assets/pokemonmissing.svg'
+  const src = props.spriteUrl || Missing
   displaySrc.value = await trimSprite(src)
 })
 </script>
