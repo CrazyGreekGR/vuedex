@@ -6,10 +6,12 @@ import MovesContainer from './MovesContainer.vue'
 
 import { ref } from 'vue'
 import { capitalizeFirst } from '@/utils/capitalizeFirst.js'
+import { formatMoves } from '@/utils/formatMoves.js'
 
 const pkmnName = ref('')
 const pkmnSprite = ref('')
 const pkmnType = ref('')
+const pkmnMoves = ref([])
 
 async function handleQuery(value) {
   try {
@@ -35,6 +37,10 @@ async function handleQuery(value) {
     if ((result.types.length = 2)) {
       pkmnType.value = pkmnType.value + `/${capitalizeFirst(result.types[1].type.name)}`
     }
+    pkmnMoves.value = result.moves
+      .slice(0, result.moves.length)
+      .map((m) => formatMoves(m.move.name))
+    console.log(`${pkmnName.value} has ${pkmnMoves.value.length} moves`)
   } catch (error) {
     console.error(error.message)
   }
@@ -46,7 +52,9 @@ async function handleQuery(value) {
     <Header />
     <SearchBox @query="handleQuery" />
     <PkmnInfo :sprite-url="pkmnSprite" :pkmn-name="pkmnName" :pkmn-type="pkmnType" />
-    <MovesContainer />
+    <MovesContainer v-if="pkmnMoves.length > 0" :pkmn-name="pkmnName">
+      <p v-for="move in pkmnMoves" :key="move">{{ move }}</p>
+    </MovesContainer>
   </div>
 </template>
 
