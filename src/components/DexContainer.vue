@@ -3,9 +3,11 @@ import Header from '@/components/Header.vue'
 import PkmnInfo from './PkmnInfo.vue'
 import SearchBox from './SearchBox.vue'
 import { ref } from 'vue'
+import { capitalizeFirst } from '@/utils/capitalizeFirst.js'
 
 const pkmnName = ref('')
 const pkmnSprite = ref('')
+const pkmnType = ref('')
 
 async function handleQuery(value) {
   try {
@@ -20,11 +22,15 @@ async function handleQuery(value) {
     }
 
     const result = await fetched.json()
-    pkmnName.value = String(result.name).charAt(0).toUpperCase() + String(result.name).slice(1)
+    pkmnName.value = capitalizeFirst(result.name)
     if (pkmnName.value === 'Undefined') {
       pkmnName.value = 'Empty text box!'
     }
     pkmnSprite.value = result.sprites.front_default
+    pkmnType.value = capitalizeFirst(result.types[0].type.name)
+    if ((result.types.length = 2)) {
+      pkmnType.value = pkmnType.value + `/${capitalizeFirst(result.types[1].type.name)}`
+    }
   } catch (error) {
     console.error(error.message)
   }
@@ -35,14 +41,14 @@ async function handleQuery(value) {
   <div id="DexContainer">
     <Header />
     <SearchBox @query="handleQuery" />
-    <PkmnInfo :sprite-url="pkmnSprite" :pkmn-name="pkmnName" />
+    <PkmnInfo :sprite-url="pkmnSprite" :pkmn-name="pkmnName" :pkmn-type="pkmnType" />
   </div>
 </template>
 
 <style scoped>
 #DexContainer {
-  width: 27rem;
-  height: 35rem;
+  width: clamp(300px, 90vw, 27rem);
+  height: clamp(400px, 90vh, 35rem);
   display: flex;
   flex-direction: column;
   background-color: #3f4650;

@@ -10,7 +10,11 @@ const props = defineProps({
   },
   pkmnName: {
     type: String,
-    default: 'NO PKMN',
+    default: 'NO POKEMON',
+  },
+  pkmnType: {
+    type: String,
+    default: 'NO POKEMON',
   },
 })
 
@@ -31,13 +35,24 @@ watchEffect(async () => {
     </div>
     <div id="textBox">
       <Transition name="name-fade" mode="out-in">
-        <p id="pkmnName" :key="pkmnName">{{ pkmnName || 'NO PKMN' }}</p>
+        <p id="pkmnName" :key="pkmnName">{{ pkmnName || 'NO POKEMON' }}</p>
+      </Transition>
+      <Transition name="type-fade" mode="out-in">
+        <p id="pkmnType" :key="pkmnType">{{ pkmnType || 'NO POKEMON' }}</p>
       </Transition>
     </div>
   </div>
 </template>
 
 <style scoped>
+p {
+  margin: 8px 0px 0px 0px;
+  color: white;
+  font-family: 'Roboto';
+  position: relative;
+  left: 20px;
+}
+
 #overallBox {
   background-color: aqua;
   position: relative; /* establishes the reference frame for imgBox + textBox */
@@ -74,11 +89,7 @@ img {
 }
 
 #pkmnName {
-  color: white;
-  font-family: 'Roboto';
   font-size: xx-large;
-  position: relative;
-  left: 20px;
   bottom: 5px;
 }
 
@@ -99,6 +110,16 @@ img {
 
 .name-fade-enter-from,
 .name-fade-leave-to {
+  opacity: 0;
+}
+
+.type-fade-enter-active,
+.type-fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.type-fade-enter-from,
+.type-fade-leave-to {
   opacity: 0;
 }
 </style>
