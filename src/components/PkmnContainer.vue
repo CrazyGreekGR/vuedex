@@ -2,6 +2,8 @@
 import Header from '@/components/Header.vue'
 import PkmnInfo from './PkmnInfo.vue'
 import SearchBox from './SearchBox.vue'
+import MovesContainer from './MovesContainer.vue'
+
 import { ref } from 'vue'
 import { capitalizeFirst } from '@/utils/capitalizeFirst.js'
 
@@ -42,6 +44,7 @@ async function handleQuery(value) {
     <Header />
     <SearchBox @query="handleQuery" />
     <PkmnInfo :sprite-url="pkmnSprite" :pkmn-name="pkmnName" :pkmn-type="pkmnType" />
+    <MovesContainer />
   </div>
 </template>
 

@@ -1,9 +1,10 @@
 <script setup>
-import DexContainer from './components/DexContainer.vue'
+import MovesContainer from './components/MovesContainer.vue'
+import PkmnContainer from './components/PkmnContainer.vue'
 </script>
 
 <template>
-  <DexContainer />
+  <PkmnContainer />
 </template>
 
 <style scoped>

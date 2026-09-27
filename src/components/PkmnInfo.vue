@@ -50,12 +50,14 @@ p {
   color: white;
   font-family: 'Roboto';
   position: relative;
-  left: 20px;
+  left: 7px;
+  top: 5px;
 }
 
 #overallBox {
   background-color: aqua;
-  position: relative; /* establishes the reference frame for imgBox + textBox */
+  position: absolute;
+  top: 5vh;
 }
 
 #imgBox {
@@ -89,8 +91,14 @@ img {
 }
 
 #pkmnName {
-  font-size: xx-large;
+  font-size: clamp(1.3rem, 7vw, 2rem);
+  white-space: nowrap;
   bottom: 5px;
+}
+
+#pkmnType {
+  font-weight: lighter;
+  white-space: nowrap;
 }
 
 .sprite-fade-enter-active,

@@ -31,10 +31,11 @@ const emit = defineEmits(['query'])
 <style scoped>
 div {
   display: flex;
+  gap: 30px;
 }
 input {
   height: 40px;
-  width: 300px;
+  width: clamp(160px, 70%, 300px);
   position: relative;
   background-color: #474e58;
   color: white;
@@ -45,11 +46,9 @@ input {
   border-radius: 10px;
 }
 button {
-  position: relative;
-  left: 30px;
   border-style: none;
   border-radius: 10px;
-  width: 80px;
+  width: clamp(60px, 20%, 80px);
   background-color: #616b78;
   cursor: default;
   transition: background-color 0.2s;
