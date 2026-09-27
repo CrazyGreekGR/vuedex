@@ -17,8 +17,9 @@ async function handleQuery(value) {
     if (!fetched.ok) {
       console.error(`Response status: ${fetched.status}`)
       if (fetched.status === 404) {
-        pkmnName.value = 'No such Pokemon found!'
+        pkmnName.value = 'No such Pokemon!'
         pkmnSprite.value = ''
+        pkmnType.value = 'No such Pokemon!'
       }
       return
     }
@@ -27,6 +28,7 @@ async function handleQuery(value) {
     pkmnName.value = capitalizeFirst(result.name)
     if (pkmnName.value === 'Undefined') {
       pkmnName.value = 'Empty text box!'
+      pkmnType.value = 'Empty text box!'
     }
     pkmnSprite.value = result.sprites.front_default
     pkmnType.value = capitalizeFirst(result.types[0].type.name)
