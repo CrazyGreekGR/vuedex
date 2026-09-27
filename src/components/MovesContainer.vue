@@ -19,7 +19,7 @@ const props = defineProps({
 <style scoped>
 #movesContainer {
   position: relative;
-  top: 16vh;
+  top: 18vh;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -66,7 +66,7 @@ const props = defineProps({
 h1 {
   color: white;
   position: relative;
-  top: clamp(40px, 17vh, 21vh);
+  top: clamp(40px, 20vh, 20vh);
   align-self: center;
 }
 </style>

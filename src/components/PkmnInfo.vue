@@ -1,6 +1,7 @@
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, computed } from 'vue'
 import { trimSprite } from '@/utils/trimSprite'
+import { typesToSprites } from '@/utils/typesToSprites'
 import Missing from '@/assets/pokemonmissing.svg?url'
 
 const props = defineProps({
@@ -19,6 +20,25 @@ const props = defineProps({
 })
 
 const displaySrc = ref(props.spriteUrl)
+const pkmnType1Sprite = ref('')
+const pkmnType2Sprite = ref('')
+
+//process type for typesToSprites
+
+const typeParts = computed(() => {
+  const raw = props.pkmnType || ''
+  return raw.split('/').map((s) => s.toLowerCase().trim())
+})
+
+const type1 = computed(() => typeParts.value[0] || 'notype')
+const type2 = computed(() => typeParts.value[1] || undefined)
+
+watchEffect(() => {
+  pkmnType1Sprite.value = typesToSprites(type1.value)
+  if (typeof pkmnType2Sprite.value !== undefined) {
+    pkmnType2Sprite.value = typesToSprites(type2.value)
+  }
+})
 
 watchEffect(async () => {
   const src = props.spriteUrl || Missing
@@ -37,9 +57,20 @@ watchEffect(async () => {
       <Transition name="name-fade" mode="out-in">
         <p id="pkmnName" :key="pkmnName">{{ pkmnName || 'NO POKEMON' }}</p>
       </Transition>
-      <Transition name="type-fade" mode="out-in">
-        <p id="pkmnType" :key="pkmnType">{{ pkmnType || 'NO POKEMON' }}</p>
-      </Transition>
+      <div class="pkmnTypes">
+        <Transition name="type-fade" mode="out-in">
+          <img :key="pkmnType1Sprite" class="pkmn1Type" :src="pkmnType1Sprite" alt="pkmn type" />
+        </Transition>
+        <Transition name="type-fade" mode="out-in">
+          <img
+            v-if="pkmnType2Sprite"
+            :key="pkmnType2Sprite"
+            class="pkmn2Type"
+            :src="pkmnType2Sprite"
+            alt="pkmn type"
+          />
+        </Transition>
+      </div>
     </div>
   </div>
 </template>
@@ -96,9 +127,25 @@ img {
   bottom: 5px;
 }
 
-#pkmnType {
-  font-weight: lighter;
-  white-space: nowrap;
+.pkmn1Type {
+  image-rendering: pixelated;
+  width: clamp(24px, 60px, 60px);
+  position: relative;
+  top: 1.5vh;
+  left: clamp(0.5vw, 7px, 1.2vw);
+}
+
+.pkmn2Type {
+  image-rendering: pixelated;
+  width: clamp(24px, 60px, 60px);
+  position: relative;
+  top: 1.5vh;
+  left: clamp(0.5vw, 55px, 1.2vw);
+}
+
+.pkmnTypes {
+  display: flex;
+  flex-direction: row;
 }
 
 .sprite-fade-enter-active,
